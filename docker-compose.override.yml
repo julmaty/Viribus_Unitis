@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  dockermysql:
+  dockermysqlviribus:
     image: mysql
     ports:
       - 3306:3306
@@ -28,7 +28,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
       - ASPNETCORE_Kestrel__Certificates__Default__Path=Viribus_Unitis.pfx 
     depends_on: 
-      dockermysql:
+      dockermysqlviribus:
         condition: service_healthy
     ports:
       - 5000:8080
