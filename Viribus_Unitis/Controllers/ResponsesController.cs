@@ -16,10 +16,12 @@ namespace Viribus_Unitis.Controllers
     public class ResponsesController : ControllerBase
     {
         private readonly ApplicationContext _context;
+        EmailService _emailService;
 
-        public ResponsesController(ApplicationContext context)
+        public ResponsesController(ApplicationContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         // GET: api/Responses
@@ -99,7 +101,7 @@ namespace Viribus_Unitis.Controllers
             _context.Responses.Add(response);
             request.Responses.Add(response);
             await _context.SaveChangesAsync();
-
+            await _emailService.SendEmailAsync("yorkshirelove@yandex.ru", "Отклик на просьбу", $"<div> Поступил отклик на вашу просьбу от {request.Name}!<br/><br/>{response.Comment} <br/><br/> Подробности на сайте. </div>");
             return CreatedAtAction("GetResponse", new { id = response.Id }, response);
         }
 
