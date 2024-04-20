@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  viribus_unitis:
+    image: ${DOCKER_REGISTRY-}viribusunitis
+    build:
+      context: .
+      dockerfile: Viribus_Unitis/Dockerfile

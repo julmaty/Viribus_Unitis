@@ -1,0 +1,6 @@
+@Viribus_Unitis_HostAddress = http://localhost:5154
+
+GET {{Viribus_Unitis_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
