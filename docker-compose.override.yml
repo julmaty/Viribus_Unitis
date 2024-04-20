@@ -29,7 +29,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=Viribus_Unitis.pfx 
     depends_on: 
       dockermysql:
-         condition: service_healthy
+        condition: service_healthy
     ports:
       - 5000:8080
     volumes:

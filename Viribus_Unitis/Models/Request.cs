@@ -11,6 +11,7 @@ namespace Viribus_Unitis.Models
         public DateTime CreatedDate { get; set; }
         public Description Description { get; set; }
         public List<Tag> Tags { get; set; } = new List<Tag>();
+        [JsonIgnore]
         public List<Response> Responses { get; set; } = new List<Response>();
     }
 }
