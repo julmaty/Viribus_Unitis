@@ -6,5 +6,6 @@
         public int RequestId { get; set; }
         public string Phone { get; set; }
         public string? Comment { get; set; }
+        public string? UserName { get; set; }
     }
 }

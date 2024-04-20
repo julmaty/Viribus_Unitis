@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using Viribus_Unitis;
 using Viribus_Unitis.Models;
 using Viribus_Unitis.ViewModel;
@@ -124,6 +125,29 @@ namespace Viribus_Unitis.Controllers
         private bool ResponseExists(int id)
         {
             return _context.Responses.Any(e => e.Id == id);
+        }
+
+        public async Task<ActionResult<string>> GetEmail(RequestViewModel request)
+        {
+
+            string responseString ="";
+            using (var client = new HttpClient())
+
+            {
+                client.DefaultRequestHeaders.Add("Authorization", request.Token);
+                var obj = new
+                {
+                    requestMessage = request.UserId
+                };
+
+                var response = await client.PostAsJsonAsync("https://api.test.profcomff.com/auth/me", obj);
+
+                Me? me = await response.Content.ReadFromJsonAsync<Me>();
+                responseString = me?.Email;
+
+            }
+
+            return responseString;
         }
     }
 }
