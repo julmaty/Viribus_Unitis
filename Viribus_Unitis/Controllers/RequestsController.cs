@@ -85,6 +85,11 @@ namespace Viribus_Unitis.Controllers
         public async Task<ActionResult<Request>> PostRequest(RequestViewModel requestModel)
         {
             Request request = new Request { Name = requestModel.Name, UserId = requestModel.UserId, CreatedDate = DateTime.Now };
+            if (requestModel.Token != null && requestModel.Token != "")
+            {
+                string email = await GetEmail(requestModel);
+                request.Email = email;
+            }
             _context.Requests.Add(request);
             Description description = new Description { Text = requestModel.Description, Request=request };
             _context.Descriptions.Add(description);
@@ -121,6 +126,28 @@ namespace Viribus_Unitis.Controllers
         private bool RequestExists(int id)
         {
             return _context.Requests.Any(e => e.Id == id);
+        }
+        public async Task<string> GetEmail(RequestViewModel request)
+        {
+
+            string responseString = "";
+            using (var client = new HttpClient())
+
+            {
+                client.DefaultRequestHeaders.Add("Authorization", request.Token);
+                var obj = new
+                {
+                    requestMessage = request.UserId
+                };
+
+                var response = await client.PostAsJsonAsync("https://api.test.profcomff.com/auth/me", obj);
+
+                Me? me = await response.Content.ReadFromJsonAsync<Me>();
+                responseString = me?.Email;
+
+            }
+
+            return responseString;
         }
     }
 }
