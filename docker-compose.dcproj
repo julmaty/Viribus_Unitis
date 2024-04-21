@@ -6,7 +6,7 @@
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>0b689aed-4eba-4a57-a82e-8da48c3c0437</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>http://localhost/weatherforecast</DockerServiceUrl>
+    <DockerServiceUrl>http://localhost</DockerServiceUrl>
     <DockerServiceName>viribus_unitis</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
