@@ -84,7 +84,7 @@ namespace Viribus_Unitis.Controllers
         [HttpPost]
         public async Task<ActionResult<Request>> PostRequest(RequestViewModel requestModel)
         {
-            Request request = new Request { Name = requestModel.Name, UserId = requestModel.UserId, CreatedDate = DateTime.Now };
+            Request request = new Request { Name = requestModel.Name, UserId = requestModel.UserId, CreatedDate = DateTime.Now, UserName=requestModel.UserName };
             if (requestModel.Token != null && requestModel.Token != "")
             {
                 string email = await GetEmail(requestModel);

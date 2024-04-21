@@ -92,7 +92,7 @@ namespace Viribus_Unitis.Controllers
         [HttpPost]
         public async Task<ActionResult<Response>> PostResponse(ResponseViewModel responseModel)
         {
-            Response response = new Response { Comment = responseModel.Comment, Phone=responseModel.Phone, UserId= responseModel.UserId };
+            Response response = new Response { Comment = responseModel.Comment, Phone=responseModel.Phone, UserId= responseModel.UserId, UserName=responseModel.UserName };
             var request = await _context.Requests.FindAsync(responseModel.RequestId);
             if (request != null)
             {
@@ -102,7 +102,12 @@ namespace Viribus_Unitis.Controllers
             _context.Responses.Add(response);
             request.Responses.Add(response);
             await _context.SaveChangesAsync();
-            await _emailService.SendEmailAsync("yorkshirelove@yandex.ru", "Отклик на просьбу", $"<div> Поступил отклик на вашу просьбу от {request.Name}!<br/><br/>{response.Comment} <br/><br/> Подробности на сайте. </div>");
+            string email = "yorkshirelove@yandex.ru";
+            if (request.Email !=null && request.Email != "")
+            {
+                email = request.Email;
+            }
+            await _emailService.SendEmailAsync(email, "Отклик на просьбу", $"<div> Поступил отклик на вашу просьбу от {response.UserName}!<br/><br/>{response.Comment} <br/><br/> Подробности на сайте. </div>");
             return CreatedAtAction("GetResponse", new { id = response.Id }, response);
         }
 
